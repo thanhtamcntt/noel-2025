@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas ❤️</title>
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:linear-gradient(to bottom,#06141b,#1b3a4b);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    color:white;
+}
+.container{text-align:center;}
+h1{color:#ffe6e6;margin-bottom:10px}
+
+/* TREE */
+.tree{position:relative;width:340px;margin:auto}
+.star{font-size:38px;color:gold;text-shadow:0 0 15px gold}
+
+.name{
+    text-align:center;
+    margin:10px 0;
+    font-size:22px;
+    color:#ffd1dc;
+    animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+    from{text-shadow:0 0 5px pink}
+    to{text-shadow:0 0 20px hotpink}
+}
+
+.layer{margin:auto;width:0;height:0;
+    border-left:160px solid transparent;
+    border-right:160px solid transparent;
+    border-bottom:180px solid #1faa59;
+    margin-top:-40px}
+.layer.mid{
+    border-left:130px solid transparent;
+    border-right:130px solid transparent;
+    border-bottom:150px solid #22c55e}
+.layer.small{
+    border-left:100px solid transparent;
+    border-right:100px solid transparent;
+    border-bottom:120px solid #34d399}
+
+.trunk{width:45px;height:55px;background:#7c4a2d;margin:auto;border-radius:5px}
+
+/* GIFTS */
+.gift{
+    position:absolute;
+    width:36px;height:36px;
+    background:#ff5f6d;
+    border-radius:6px;
+    cursor:pointer;
+    animation:swing 2s ease-in-out infinite;
+}
+.gift::before{content:'';position:absolute;width:100%;height:6px;background:gold;top:15px}
+.gift::after{content:'';position:absolute;width:6px;height:100%;background:gold;left:15px}
+
+@keyframes swing{
+    0%,100%{transform:rotate(-5deg)}
+    50%{transform:rotate(5deg)}
+}
+
+.gift.opened{
+    background:#777;
+    animation:none;
+    cursor:default;
+}
+
+/* POPUP */
+.overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+.box{
+    background:white;
+    color:#333;
+    padding:30px;
+    border-radius:20px;
+    width:340px;
+    text-align:center;
+    animation:pop .3s ease;
+}
+.big-love{
+    font-size:26px;
+    color:#ff5f6d;
+    animation:shake .5s infinite;
+}
+@keyframes pop{from{transform:scale(.5)}to{transform:scale(1)}}
+@keyframes shake{
+    0%{transform:rotate(-1deg)}
+    50%{transform:rotate(1deg)}
+    100%{transform:rotate(-1deg)}
+}
+
+button{
+    margin-top:20px;
+    padding:10px 22px;
+    border:none;border-radius:20px;
+    background:#ff5f6d;
+    color:white;
+    cursor:pointer;
+}
+
+/* HEARTS */
+.heart{
+    position:absolute;
+    font-size:22px;
+    animation:float 4s linear;
+}
+@keyframes float{
+    from{opacity:1;transform:translateY(0)}
+    to{opacity:0;transform:translateY(-200px)}
+}
+
+/* SNOW */
+.snow{position:absolute;top:-10px;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh)}}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>🎄 Merry Christmas 🎁</h1>
+
+<div class="tree">
+    <div class="star">⭐</div>
+
+    <!-- 👉👉👉 TÊN NGƯỜI YÊU -->
+    <div class="name">💖 Bé yêu 💖</div>
+
+    <div class="layer small"></div>
+    <div class="layer mid"></div>
+    <div class="layer"></div>
+    <div class="trunk"></div>
+
+    <!-- GIFTS -->
+    <div class="gift" style="top:130px;left:150px" onclick="openGift(0,this)"></div>
+    <div class="gift" style="top:170px;left:105px" onclick="openGift(1,this)"></div>
+    <div class="gift" style="top:170px;left:195px" onclick="openGift(2,this)"></div>
+    <div class="gift" style="top:230px;left:80px" onclick="openGift(3,this)"></div>
+    <div class="gift" style="top:230px;left:230px" onclick="openGift(4,this)"></div>
+    <!-- QUÀ CUỐI -->
+    <div class="gift" style="top:270px;left:155px" onclick="openGift(5,this)"></div>
+</div>
+</div>
+
+<div class="overlay" id="overlay">
+<div class="box" id="box">
+    <p id="msg"></p>
+    <button onclick="closeBox()">Đóng ❤️</button>
+</div>
+</div>
+
+<script>
+/* 👉👉👉 SỬA LỜI CHÚC Ở ĐÂY */
+const messages = [
+  "🎁 Món quà này là một cái ôm thật chặt, để em biết lúc nào cũng có anh ở đây ❤️",
+  "😆 Nếu lúc này em đang mỉm cười, thì Noel của anh đã trọn vẹn rồi",
+  "🎄 Giữa hàng triệu khoảnh khắc của mùa đông, anh chọn có em bên cạnh",
+  "🥺 Cảm ơn em vì đã đến, đã ở lại và luôn nắm tay anh những lúc khó khăn",
+  "💖 Trời có thể lạnh, nhưng chỉ cần nghĩ tới em là lòng anh đã ấm lên rồi",
+  "❤️ Noel này và tất cả những Noel sau nữa, anh chỉ mong được yêu em nhiều hơn ❤️"
+];
+
+let opened=0;
+const total=messages.length;
+
+function openGift(i,el){
+    if(el.classList.contains("opened")) return;
+
+    if(i===total-1 && opened<total-1){
+        alert("😏 Mở hết quà trước đã nha!");
+        return;
+    }
+
+    el.classList.add("opened");
+    opened++;
+
+    const msg=document.getElementById("msg");
+    msg.className = (i===total-1) ? "big-love" : "";
+    msg.innerText = messages[i];
+
+    document.getElementById("overlay").style.display="flex";
+
+    if(i===total-1){
+        for(let j=0;j<25;j++) createHeart();
+    }
+}
+
+function closeBox(){
+    document.getElementById("overlay").style.display="none";
+}
+
+/* HEART */
+function createHeart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.top="70%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+}
+
+/* SNOW */
+setInterval(()=>{
+    const s=document.createElement("div");
+    s.className="snow";
+    s.innerHTML="❄️";
+    s.style.left=Math.random()*window.innerWidth+"px";
+    s.style.animationDuration=(3+Math.random()*5)+"s";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),8000);
+},200);
+</script>
+
+</body>
+</html>
